@@ -7,20 +7,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="bg-noise" aria-hidden="true"></div>
     <main class="shell">
       <section class="hero">
-        <p class="kicker">Global Desk</p>
-        <h1>World News Radar</h1>
-        <p class="subtitle">Live headlines from the last 24 hours only.</p>
+        <p class="kicker">WorldNews24h</p>
+        <h1>Global Briefing</h1>
+        <p class="subtitle">Every headline here was published in the last 24 hours.</p>
         <div class="hero-actions">
-          <button id="refreshBtn" class="refresh-btn">Refresh Feed</button>
-          <p id="meta">Loading latest updates...</p>
+          <button id="refreshBtn" class="refresh-btn">Reload Briefing</button>
+          <p id="meta">Loading latest stories...</p>
+        </div>
+        <div class="hero-stats">
+          <article class="stat">
+            <p class="stat-label">Stories</p>
+            <p id="storyCount" class="stat-value">-</p>
+          </article>
+          <article class="stat">
+            <p class="stat-label">Sources</p>
+            <p id="sourceCount" class="stat-value">-</p>
+          </article>
+          <article class="stat">
+            <p class="stat-label">Window</p>
+            <p id="timeWindow" class="stat-value">24h</p>
+          </article>
         </div>
       </section>
 

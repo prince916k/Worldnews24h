@@ -2,6 +2,9 @@ const listEl = document.getElementById("newsList");
 const sourceBarEl = document.getElementById("sourceBar");
 const metaEl = document.getElementById("meta");
 const refreshBtn = document.getElementById("refreshBtn");
+const storyCountEl = document.getElementById("storyCount");
+const sourceCountEl = document.getElementById("sourceCount");
+const timeWindowEl = document.getElementById("timeWindow");
 
 function formatDate(timestamp) {
   return new Date(timestamp).toLocaleString();
@@ -41,16 +44,21 @@ function renderItems(items) {
   if (!items.length) {
     sourceBarEl.innerHTML = "";
     listEl.innerHTML = '<div class="empty">No world news stories were found in the last 24 hours.</div>';
+    storyCountEl.textContent = "0";
+    sourceCountEl.textContent = "0";
     return;
   }
 
   renderSourceBar(items);
+  const uniqueSources = new Set(items.map((item) => item.source).filter(Boolean));
+  storyCountEl.textContent = String(items.length);
+  sourceCountEl.textContent = String(uniqueSources.size);
 
   listEl.innerHTML = items
-    .map((item) => {
+    .map((item, index) => {
       const safeDesc = (item.description || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
       return `
-        <article class="news-item">
+        <article class="news-item" style="--delay:${Math.min(index * 35, 420)}ms;">
           <div class="news-head">
             <span class="source">${item.source}</span>
             <span class="time" title="${formatDate(item.publishedAt)}">${relativeTime(item.publishedAt)}</span>
@@ -71,10 +79,14 @@ async function loadNews() {
     const data = await response.json();
 
     renderItems(data.items || []);
+    timeWindowEl.textContent = `${data.windowHours}h`;
     metaEl.textContent = `Last updated: ${new Date(data.updatedAt).toLocaleString()} | ${data.total} stories from the last ${data.windowHours} hours`;
   } catch (err) {
     metaEl.textContent = "Could not load news right now.";
     sourceBarEl.innerHTML = "";
+    storyCountEl.textContent = "-";
+    sourceCountEl.textContent = "-";
+    timeWindowEl.textContent = "24h";
     listEl.innerHTML = '<div class="empty">Please try again in a moment.</div>';
   }
 }
