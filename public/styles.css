@@ -1,14 +1,13 @@
 :root {
-  --paper: #f6efe4;
-  --paper-deep: #e8dcc7;
-  --ink: #1d1e26;
-  --ink-soft: #4c4f61;
-  --brand: #b32936;
-  --brand-soft: #e5c3b7;
-  --highlight: #204a78;
-  --card: rgba(255, 251, 246, 0.85);
-  --card-border: rgba(48, 49, 60, 0.12);
-  --line: rgba(29, 30, 38, 0.16);
+  --bg-1: #040814;
+  --bg-2: #081129;
+  --ink: #f3f7ff;
+  --ink-soft: #b9c9e6;
+  --line: rgba(214, 232, 255, 0.28);
+  --glass: rgba(12, 24, 52, 0.45);
+  --glass-strong: rgba(13, 28, 59, 0.62);
+  --accent: #72d5ff;
+  --accent-2: #8f9bff;
 }
 
 * {
@@ -21,79 +20,127 @@ body {
   color: var(--ink);
   font-family: "Manrope", sans-serif;
   background:
-    radial-gradient(900px 500px at 105% -8%, rgba(179, 41, 54, 0.2), transparent 62%),
-    radial-gradient(700px 420px at -8% 0%, rgba(32, 74, 120, 0.16), transparent 58%),
-    linear-gradient(170deg, var(--paper), #f8f2e9 42%, var(--paper-deep));
+    radial-gradient(900px 500px at 12% -6%, rgba(143, 155, 255, 0.22), transparent 62%),
+    radial-gradient(820px 520px at 90% -2%, rgba(114, 213, 255, 0.16), transparent 64%),
+    linear-gradient(145deg, var(--bg-1), var(--bg-2));
+  overflow-x: hidden;
 }
 
 .bg-noise {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.28;
+  z-index: -2;
+  opacity: 0.15;
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 3px 3px;
+}
+
+.bg-orb {
+  position: fixed;
+  width: 340px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(32px);
+  pointer-events: none;
   z-index: -1;
+  animation: orbFloat 15s ease-in-out infinite;
+}
+
+.orb-a {
+  top: -90px;
+  left: -90px;
+  background: radial-gradient(circle at 38% 35%, rgba(143, 155, 255, 0.76), rgba(143, 155, 255, 0.08) 70%);
+}
+
+.orb-b {
+  top: 22vh;
+  right: -140px;
+  background: radial-gradient(circle at 46% 46%, rgba(114, 213, 255, 0.75), rgba(114, 213, 255, 0.06) 72%);
+  animation-delay: -5s;
+}
+
+.orb-c {
+  bottom: -150px;
+  left: 28%;
+  width: 420px;
+  background: radial-gradient(circle at 42% 44%, rgba(81, 107, 255, 0.58), rgba(81, 107, 255, 0.05) 72%);
+  animation-delay: -9s;
 }
 
 .shell {
-  max-width: 1100px;
+  width: min(1140px, 100%);
   margin: 0 auto;
   padding: 28px 16px 62px;
 }
 
+.hero,
+.stat,
+.source-pill,
+.news-item,
+.empty {
+  border: 1px solid var(--line);
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 18px 50px rgba(0, 0, 0, 0.36);
+}
+
 .hero {
-  border: 1px solid var(--card-border);
-  border-radius: 20px;
-  background: linear-gradient(140deg, rgba(255, 250, 244, 0.95), rgba(244, 235, 223, 0.84));
-  box-shadow: 0 20px 42px rgba(20, 16, 11, 0.11);
+  border-radius: 24px;
   padding: 28px;
-  animation: slideIn 0.6s ease;
   position: relative;
   overflow: hidden;
+  animation: riseIn 0.6s ease both;
 }
 
 .hero::before {
   content: "";
   position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  right: -90px;
-  top: -120px;
-  background: radial-gradient(circle, rgba(179, 41, 54, 0.18), transparent 70%);
+  inset: -1px;
+  border-radius: inherit;
   pointer-events: none;
+  background: linear-gradient(122deg, rgba(255, 255, 255, 0.2), transparent 28%, transparent 62%, rgba(114, 213, 255, 0.2));
+  mix-blend-mode: screen;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 44%;
+  height: 230%;
+  left: -52%;
+  top: -66%;
+  transform: rotate(16deg);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.24), transparent);
+  animation: shimmer 5.8s linear infinite;
 }
 
 h1 {
   margin: 10px 0 6px;
   font-family: "Fraunces", serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.04;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  line-height: 1.03;
   letter-spacing: 0.2px;
 }
 
 .kicker {
   margin: 0;
-  color: var(--brand);
+  color: var(--accent);
   font-weight: 800;
-  text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 0.78rem;
+  text-transform: uppercase;
 }
 
 .subtitle {
   margin: 0;
   color: var(--ink-soft);
-  max-width: 42ch;
-}
-
-#meta {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
+  max-width: 46ch;
 }
 
 .hero-actions {
@@ -104,165 +151,186 @@ h1 {
   flex-wrap: wrap;
 }
 
+#meta {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+}
+
 .refresh-btn {
-  border: none;
+  border: 1px solid rgba(216, 238, 255, 0.5);
   border-radius: 12px;
-  background: linear-gradient(120deg, var(--brand), #d64f4f);
-  color: #fff8f5;
+  color: #e9f7ff;
+  background: linear-gradient(135deg, rgba(114, 213, 255, 0.38), rgba(143, 155, 255, 0.46));
   font-size: 0.9rem;
   font-weight: 800;
-  letter-spacing: 0.02em;
-  padding: 11px 16px;
+  letter-spacing: 0.03em;
+  padding: 10px 16px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.25s ease;
 }
 
 .refresh-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(179, 41, 54, 0.28);
-  filter: saturate(1.07);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(114, 213, 255, 0.3);
 }
 
 .hero-stats {
   margin-top: 18px;
   display: grid;
-  gap: 10px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .stat {
-  margin: 0;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 11px 12px;
-  background: rgba(255, 252, 248, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.1), transparent 52%);
+  pointer-events: none;
 }
 
 .stat-label {
   margin: 0;
-  color: var(--ink-soft);
+  color: #c8dcfb;
   font-size: 0.77rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
 }
 
 .stat-value {
   margin: 6px 0 0;
-  font-size: 1.2rem;
+  color: #f0f8ff;
+  font-size: 1.24rem;
   font-weight: 800;
-  color: var(--highlight);
 }
 
 .source-bar {
   margin-top: 18px;
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
 .source-pill {
-  border: 1px solid rgba(32, 74, 120, 0.24);
-  color: #224868;
-  background: rgba(235, 245, 252, 0.88);
   border-radius: 999px;
-  padding: 7px 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  white-space: nowrap;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: #dff0ff;
 }
 
 .news-grid {
   margin-top: 18px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
   gap: 15px;
 }
 
 .news-item {
-  border: 1px solid var(--card-border);
-  border-radius: 14px;
-  background: var(--card);
-  padding: 18px;
+  border-radius: 16px;
+  padding: 16px;
   display: grid;
   gap: 10px;
-  min-height: 230px;
-  animation: riseIn 0.4s ease both;
+  min-height: 225px;
+  position: relative;
+  overflow: hidden;
+  animation: liftIn 0.45s ease both;
   animation-delay: var(--delay, 0ms);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-item::before {
+  content: "";
+  position: absolute;
+  width: 42%;
+  height: 210%;
+  left: -58%;
+  top: -57%;
+  transform: rotate(20deg);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.16), transparent);
+  animation: shimmer 6.5s linear infinite;
+  animation-delay: calc(var(--delay, 0ms) * 0.8);
+  pointer-events: none;
 }
 
 .news-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 13px 30px rgba(17, 13, 8, 0.09);
-  border-color: rgba(32, 74, 120, 0.26);
+  transform: translateY(-3px);
+  border-color: rgba(226, 245, 255, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 22px 42px rgba(4, 7, 18, 0.5);
 }
 
 .news-head {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
 .source {
-  color: var(--brand);
-  font-size: 0.8rem;
-  font-weight: 800;
+  color: var(--accent);
   text-transform: uppercase;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
+  font-weight: 800;
 }
 
 .time {
-  color: var(--ink-soft);
-  font-size: 0.8rem;
+  color: #b9c9e6;
+  font-size: 0.79rem;
 }
 
 .news-item h2 {
   margin: 0;
   font-family: "Fraunces", serif;
-  font-size: 1.22rem;
-  line-height: 1.24;
+  font-size: 1.18rem;
+  line-height: 1.28;
 }
 
 .news-item a {
-  color: #1d2533;
+  color: #f2f7ff;
   text-decoration: none;
 }
 
 .news-item a:hover {
-  color: var(--highlight);
+  color: #b8deff;
 }
 
 .item-desc {
   margin: 0;
-  color: #3d4358;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  color: #c2d3ef;
+  line-height: 1.53;
+  font-size: 0.94rem;
 }
 
 .empty {
-  border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--card);
   padding: 18px;
   color: var(--ink-soft);
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    transform: translate3d(0, -24px, 0) scale(1.07);
   }
 }
 
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -270,17 +338,43 @@ h1 {
   }
 }
 
-@media (max-width: 700px) {
+@keyframes liftIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(0) rotate(20deg);
+  }
+  100% {
+    transform: translateX(540%) rotate(20deg);
+  }
+}
+
+@media (max-width: 800px) {
   .hero {
-    padding: 20px;
-    border-radius: 16px;
+    padding: 22px;
   }
 
   .hero-stats {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .shell {
+    padding: 18px 12px 48px;
   }
 
   .news-grid {
     grid-template-columns: 1fr;
   }
 }
+
